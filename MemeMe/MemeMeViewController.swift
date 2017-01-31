@@ -93,6 +93,8 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
         bottomTextField.text = "BOTTOM"
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         imagePickerView.image = nil
+        
+//        self.navigationController?.navigationBar.navig
     }
     
     func save() {
