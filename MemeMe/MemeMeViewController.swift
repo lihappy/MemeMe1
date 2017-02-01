@@ -27,9 +27,19 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cacelButton: UIBarButtonItem!
+    
+    @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var navigationBar: UINavigationBar!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        topTextField.delegate = self
+        bottomTextField.delegate = self
+        
         setDefaultUI()
 //        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
@@ -49,6 +59,20 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
         unsubscribeFromKeyboardNotifications()
     }
 
+    @IBAction func shareMeme(_ sender: Any) {
+        let image = generateMemedImage()
+        let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+//        self.present(controller, animated: true, completion: nil)
+//        
+//        let activityVC = UIActivityViewController
+        present(activityController, animated: true) {
+            self.save()
+        }
+    }
+    
+    @IBAction func cancelMeme(_ sender: Any) {
+    }
+    
     @IBAction func pickAnImageFromAlbum(_ sender: Any) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -94,6 +118,9 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         imagePickerView.image = nil
         
+        toolbar.isHidden = false
+        navigationBar.isHidden = false
+        
 //        self.navigationController?.navigationBar.navig
     }
     
@@ -107,7 +134,8 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
     func generateMemedImage() -> UIImage {
         
         // TODO: Hide toolbar and navbar
-        
+        toolbar.isHidden = true
+        navigationBar.isHidden = true
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -127,3 +155,29 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
         picker .dismiss(animated: true, completion: nil)
     }
 }
+
+extension MemeMeViewController: UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        textField.text = ""
+        return true;
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard string.characters.count > 0 else {
+            return true
+        }
+        
+        var currentText = textField.text ?? ""
+        currentText = (currentText as NSString).replacingCharacters(in: range, with: string.uppercased())
+        textField.text = currentText
+        return false
+    }
+}
+
+

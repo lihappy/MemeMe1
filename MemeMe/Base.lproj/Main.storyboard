@@ -65,8 +65,16 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="Title" id="7Pt-O6-vyq">
-                                        <barButtonItem key="leftBarButtonItem" title="Share" id="RxV-Me-PaR"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="r3e-5l-Mk9"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="RxV-Me-PaR">
+                                            <connections>
+                                                <action selector="shareMeme:" destination="BYZ-38-t0r" id="je2-Id-jRV"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="r3e-5l-Mk9">
+                                            <connections>
+                                                <action selector="cancelMeme:" destination="BYZ-38-t0r" id="8Ah-GH-VXU"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -81,7 +89,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="nqM-Qs-hC7" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="1Px-GH-Spg"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="C0l-YM-MUl" secondAttribute="bottom" id="7K4-yK-KyN"/>
@@ -103,8 +111,12 @@
                     </view>
                     <connections>
                         <outlet property="bottomTextField" destination="NwO-u0-BsS" id="I7t-ze-NhT"/>
+                        <outlet property="cacelButton" destination="r3e-5l-Mk9" id="zbw-8q-JIN"/>
                         <outlet property="cameraButton" destination="KCF-jM-yVU" id="MzM-Hi-Z4q"/>
                         <outlet property="imagePickerView" destination="NaJ-Mk-5xF" id="coG-4f-NmB"/>
+                        <outlet property="navigationBar" destination="Jd4-r3-Ino" id="vqC-HE-Leg"/>
+                        <outlet property="shareButton" destination="RxV-Me-PaR" id="HiY-uy-aht"/>
+                        <outlet property="toolbar" destination="C0l-YM-MUl" id="u0V-xr-3nZ"/>
                         <outlet property="topTextField" destination="nqM-Qs-hC7" id="Zhg-TB-dto"/>
                     </connections>
                 </viewController>
