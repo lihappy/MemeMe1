@@ -8,12 +8,6 @@
 
 import UIKit
 
-let memeTextAttributes:[String:Any] = [
-    NSStrokeColorAttributeName: UIColor.white,
-    NSForegroundColorAttributeName: UIColor.white,
-    NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-    NSStrokeWidthAttributeName: 1.0]
-
 struct Meme {
     var topText: String
     var bottomText: String
@@ -41,49 +35,47 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
         bottomTextField.delegate = self
         
         setDefaultUI()
-//        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-//        setDefaultUI()
-        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
         subscribeToKeyboardNotifications()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         unsubscribeFromKeyboardNotifications()
     }
 
     @IBAction func shareMeme(_ sender: Any) {
         let image = generateMemedImage()
         let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-//        self.present(controller, animated: true, completion: nil)
-//        
-//        let activityVC = UIActivityViewController
         present(activityController, animated: true) {
-            self.save()
+            self.save(image)
         }
     }
     
     @IBAction func cancelMeme(_ sender: Any) {
+        setDefaultUI()
     }
     
     @IBAction func pickAnImageFromAlbum(_ sender: Any) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true) {
+            self.shareButton.isEnabled = true
+        }
     }
 
     @IBAction func pickAnImageFromCamera(_ sender: Any) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        present(imagePicker, animated: true, completion: nil)
+        present(imagePicker, animated: true) {
+            self.shareButton.isEnabled = true
+        }
     }
     
     func keyboardWillShow(_ notification: Notification) {
@@ -111,29 +103,22 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
     }
     
     func setDefaultUI() {
-//        topTextField.defaultTextAttributes = memeTextAttributes
-//        bottomTextField.defaultTextAttributes = memeTextAttributes
         topTextField.text = "TOP"
         bottomTextField.text = "BOTTOM"
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         imagePickerView.image = nil
         
-        toolbar.isHidden = false
-        navigationBar.isHidden = false
-        
-//        self.navigationController?.navigationBar.navig
+        shareButton.isEnabled = false
     }
     
-    func save() {
+    func save(_ memedImage: UIImage) {
         // Create the meme
-//        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: generateMemedImage())
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
         
-//        UIImageWriteToSavedPhotosAlbum(meme, <#T##completionTarget: Any?##Any?#>, <#T##completionSelector: Selector?##Selector?#>, <#T##contextInfo: UnsafeMutableRawPointer?##UnsafeMutableRawPointer?#>)
     }
     
     func generateMemedImage() -> UIImage {
-        
-        // TODO: Hide toolbar and navbar
+        // Hide toolbar and navbar
         toolbar.isHidden = true
         navigationBar.isHidden = true
         
@@ -143,7 +128,9 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
-        // TODO: Show toolbar and navbar
+        // Show toolbar and navbar
+        toolbar.isHidden = false;
+        navigationBar.isHidden = false
         
         return memedImage
     }
@@ -152,7 +139,7 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate, UI
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imagePickerView.image = image
         }
-        picker .dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
     }
 }
 
