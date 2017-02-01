@@ -28,7 +28,7 @@
                                 </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Hfc-2i-pl7"/>
-                                    <barButtonItem title="Camera" width="90" id="KCF-jM-yVU">
+                                    <barButtonItem systemItem="camera" id="KCF-jM-yVU">
                                         <connections>
                                             <action selector="pickAnImageFromCamera:" destination="BYZ-38-t0r" id="7OX-mc-aRA"/>
                                         </connections>
@@ -73,7 +73,7 @@
                                     <constraint firstAttribute="height" constant="44" id="sZ7-0i-DWL"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="Title" id="7Pt-O6-vyq">
+                                    <navigationItem id="7Pt-O6-vyq">
                                         <barButtonItem key="leftBarButtonItem" systemItem="action" id="RxV-Me-PaR">
                                             <connections>
                                                 <action selector="shareMeme:" destination="BYZ-38-t0r" id="je2-Id-jRV"/>
