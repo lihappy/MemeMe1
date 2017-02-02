@@ -8,13 +8,6 @@
 
 import UIKit
 
-struct Meme {
-    var topText: String
-    var bottomText: String
-    var originalImage: UIImage
-    var memedImage: UIImage
-}
-
 class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
     
     @IBOutlet weak var topTextField: UITextField!
@@ -27,6 +20,8 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var navigationBar: UINavigationBar!
     
+    var shouldLiftView = false
+    let bottomTextFieldId: String = "bottomTextField"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +29,7 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
         topTextField.delegate = self
         bottomTextField.delegate = self
         
+        setDefaultTextAttributes()
         setDefaultUI()
     }
     
@@ -52,9 +48,13 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
     @IBAction func shareMeme(_ sender: Any) {
         let image = generateMemedImage()
         let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-        present(activityController, animated: true) {
-            self.save(image)
+        activityController.completionWithItemsHandler = {
+            (activityType, completed:Bool, items, error) in
+            if completed {
+                self.save(image)
+            }
         }
+        present(activityController, animated: true)
     }
     
     @IBAction func cancelMeme(_ sender: Any) {
@@ -62,26 +62,41 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     @IBAction func pickAnImageFromAlbum(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true) {
-            self.shareButton.isEnabled = true
-        }
+        pickAnImageFrom(.photoLibrary)
     }
 
     @IBAction func pickAnImageFromCamera(_ sender: Any) {
+        pickAnImageFrom(.camera)
+    }
+    
+    func pickAnImageFrom(_ sourceType: UIImagePickerControllerSourceType) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = .camera
+        imagePicker.sourceType = sourceType
         present(imagePicker, animated: true) {
             self.shareButton.isEnabled = true
         }
     }
     
+    func setDefaultTextAttributes() {
+        let memeStyle = NSMutableParagraphStyle()
+        memeStyle.alignment = NSTextAlignment.center
+        
+        let memeTextAttributes:[String:Any] = [
+            NSStrokeColorAttributeName: UIColor.black,
+            NSForegroundColorAttributeName: UIColor.white,
+            NSFontAttributeName: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+            NSStrokeWidthAttributeName: -3.0,
+            NSParagraphStyleAttributeName: memeStyle]
+        
+        topTextField.defaultTextAttributes = memeTextAttributes
+        bottomTextField.defaultTextAttributes = memeTextAttributes
+    }
+    
     func setDefaultUI() {
         topTextField.text = "TOP"
         bottomTextField.text = "BOTTOM"
+        
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         imagePickerView.image = nil
         
@@ -91,7 +106,6 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
     func save(_ memedImage: UIImage) {
         // Create the meme
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
-        
     }
     
     func generateMemedImage() -> UIImage {
@@ -125,11 +139,15 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     func keyboardWillShow(_ notification: Notification) {
-        view.frame.origin.y = 0 - getKeyboardHeight(notification)
+        if shouldLiftView {
+            view.frame.origin.y = 0 - getKeyboardHeight(notification)
+        }
     }
     
     func keyboardWillHide(_ notification: Notification) {
-        view.frame.origin.y = 0
+        if shouldLiftView {
+            view.frame.origin.y = 0
+        }
     }
     
     func getKeyboardHeight(_ notification:Notification) -> CGFloat {
@@ -155,7 +173,16 @@ extension MemeMeViewController: UITextFieldDelegate {
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         textField.text = ""
+        if textField.restorationIdentifier == bottomTextFieldId {
+            shouldLiftView = true
+        }
         return true;
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField.restorationIdentifier == bottomTextFieldId {
+            shouldLiftView = false
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
