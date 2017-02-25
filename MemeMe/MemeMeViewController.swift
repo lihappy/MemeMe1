@@ -106,6 +106,14 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
     func save(_ memedImage: UIImage) {
         // Create the meme
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imagePickerView.image!, memedImage: memedImage)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.memes.append(meme)
+        
+//        let sendMemesTableViewController = self.storyboard!.instantiateViewController(withIdentifier: "sendMemesTableViewController") as! SendMemesTableViewController
+//        sendMemesTableViewController.tableView.reloadData()
+//        
+//        let sendMemesCollectionViewController = self.storyboard!.instantiateViewController(withIdentifier: "sendMemesCollectionViewController") as! SendMemesCollectionViewController
+//        sendMemesCollectionViewController.collectionView?.reloadData()
     }
     
     func generateMemedImage() -> UIImage {
