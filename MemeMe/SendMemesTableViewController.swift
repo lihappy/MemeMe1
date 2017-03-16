@@ -9,28 +9,15 @@
 import UIKit
 
 private let reuseIdentifier = "SendMemeTableViewCell"
+let memeDetailViewControllerIdentifier = "memeDetailViewController"
 
 class SendMemesTableViewController: UITableViewController {
     var memes: [Meme]!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        memes = appDelegate.memes
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        memes = appDelegate.memes
+        memes = (UIApplication.shared.delegate as! AppDelegate).memes
         self.tableView.reloadData()
     }
 
@@ -44,62 +31,26 @@ class SendMemesTableViewController: UITableViewController {
         return memes.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
 
         // Configure the cell...
         let meme: Meme = self.memes[indexPath.row]
-        cell.textLabel?.text = meme.topText
         cell.imageView?.image = meme.memedImage
-
+        cell.textLabel?.text = meme.topText + "..." + meme.bottomText;
+        
         return cell
     }
- 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        openDetailMemeVC(withMeme: self.memes[indexPath.row], self)
     }
-    */
+}
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
+// MARK: - Public method
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+func openDetailMemeVC(withMeme meme: Meme, _ sender: Any) {
+    let memeDetailViewController = (sender as AnyObject).storyboard??.instantiateViewController(withIdentifier: memeDetailViewControllerIdentifier) as! MemeDetailViewController
+    memeDetailViewController.meme = meme
+    (sender as AnyObject).navigationController??.pushViewController(memeDetailViewController, animated: true)
 }

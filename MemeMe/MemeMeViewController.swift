@@ -59,6 +59,7 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
     
     @IBAction func cancelMeme(_ sender: Any) {
         setDefaultUI()
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func pickAnImageFromAlbum(_ sender: Any) {
@@ -109,11 +110,7 @@ class MemeMeViewController: UIViewController, UINavigationControllerDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.memes.append(meme)
         
-//        let sendMemesTableViewController = self.storyboard!.instantiateViewController(withIdentifier: "sendMemesTableViewController") as! SendMemesTableViewController
-//        sendMemesTableViewController.tableView.reloadData()
-//        
-//        let sendMemesCollectionViewController = self.storyboard!.instantiateViewController(withIdentifier: "sendMemesCollectionViewController") as! SendMemesCollectionViewController
-//        sendMemesCollectionViewController.collectionView?.reloadData()
+        self.dismiss(animated: true, completion: nil)
     }
     
     func generateMemedImage() -> UIImage {
