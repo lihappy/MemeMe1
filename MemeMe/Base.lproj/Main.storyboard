@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -86,14 +87,45 @@
                                     <rect key="frame" x="0.0" y="0.0" width="156" height="154"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZGe-WZ-Smh">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZGe-WZ-Smh">
                                             <rect key="frame" x="0.0" y="0.0" width="156" height="154"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JaW-pq-SX1">
+                                            <rect key="frame" x="8" y="8" width="140" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="nVH-qF-NBe"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Wl-nT-nU2">
+                                            <rect key="frame" x="8" y="125" width="140" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="SJ6-IK-vOm"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="JaW-pq-SX1" firstAttribute="top" secondItem="WsJ-SN-oGN" secondAttribute="topMargin" id="8qM-eg-KYB"/>
+                                    <constraint firstItem="JaW-pq-SX1" firstAttribute="trailing" secondItem="WsJ-SN-oGN" secondAttribute="trailingMargin" id="GId-ij-b4E"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZGe-WZ-Smh" secondAttribute="trailing" id="WOF-lW-NfC"/>
+                                    <constraint firstItem="3Wl-nT-nU2" firstAttribute="trailing" secondItem="WsJ-SN-oGN" secondAttribute="trailingMargin" id="Ylr-nu-jTg"/>
+                                    <constraint firstItem="ZGe-WZ-Smh" firstAttribute="top" secondItem="WsJ-SN-oGN" secondAttribute="top" id="eV4-vl-rC5"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZGe-WZ-Smh" secondAttribute="bottom" id="gTq-Md-rf3"/>
+                                    <constraint firstItem="3Wl-nT-nU2" firstAttribute="leading" secondItem="WsJ-SN-oGN" secondAttribute="leadingMargin" id="ln9-ox-9ST"/>
+                                    <constraint firstItem="3Wl-nT-nU2" firstAttribute="bottom" secondItem="WsJ-SN-oGN" secondAttribute="bottomMargin" id="qS3-jk-L7a"/>
+                                    <constraint firstItem="JaW-pq-SX1" firstAttribute="leading" secondItem="WsJ-SN-oGN" secondAttribute="leadingMargin" id="ucs-FQ-dDf"/>
+                                    <constraint firstItem="ZGe-WZ-Smh" firstAttribute="leading" secondItem="WsJ-SN-oGN" secondAttribute="leading" id="v7Q-BU-1BT"/>
+                                </constraints>
                                 <connections>
+                                    <outlet property="bottomLabel" destination="3Wl-nT-nU2" id="1GT-X3-Uet"/>
                                     <outlet property="sendMemeImageView" destination="ZGe-WZ-Smh" id="7a3-la-XRa"/>
+                                    <outlet property="topLabel" destination="JaW-pq-SX1" id="HEc-uC-hHA"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -272,11 +304,11 @@
             </objects>
             <point key="canvasLocation" x="1353" y="-707"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="iPz-Ev-9mn">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Rli-ry-wou" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="A44-bR-fKT"/>
+                    <tabBarItem key="tabBarItem" title="" image="table-icon" id="A44-bR-fKT"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tlu-yF-nwK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -291,11 +323,11 @@
             </objects>
             <point key="canvasLocation" x="-759" y="-727"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="lqy-lj-IiL">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OOB-t1-Hvd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="SFY-om-DNN"/>
+                    <tabBarItem key="tabBarItem" title="" image="collect-icon" id="SFY-om-DNN"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SBJ-Ti-5zK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -311,6 +343,10 @@
             <point key="canvasLocation" x="-759" y="-13"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="collect-icon" width="25" height="25"/>
+        <image name="table-icon" width="25" height="25"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lak-Gf-r7f"/>
     </inferredMetricsTieBreakers>

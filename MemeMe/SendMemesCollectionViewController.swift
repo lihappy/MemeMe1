@@ -48,7 +48,9 @@ class SendMemesCollectionViewController: UICollectionViewController {
         
         // Configure the cell
         let meme: Meme = self.memes[indexPath.row]
-        cell.sendMemeImageView.image = meme.memedImage
+        cell.sendMemeImageView.image = meme.originalImage
+        cell.topLabel.text = meme.topText
+        cell.bottomLabel.text = meme.bottomText
     
         return cell
     }
