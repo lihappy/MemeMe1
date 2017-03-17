@@ -34,12 +34,10 @@ class SendMemesCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return memes.count
     }
 
@@ -62,15 +60,9 @@ class SendMemesCollectionViewController: UICollectionViewController {
     }
 
     override func viewDidLayoutSubviews() {
-        NSLog("haha")
         let orientation = UIApplication.shared.statusBarOrientation
         let itemCountInRow: CGFloat = orientation.isPortrait ? 3.0 : 6.0;
-//        let itemCountInRow: CGFloat = 3.0
         let space: CGFloat = 3.0
-        
-        NSLog("width:%lf, h:%lf", view.frame.size.width, view.frame.size.height)
-        
-//        let dimension = ((orientation.isPortrait ? view.frame.size.width : view.frame.size.height) - ((itemCountInRow - 1) * space)) / itemCountInRow
         let dimension = (view.frame.size.width - ((itemCountInRow - 1) * space)) / itemCountInRow
         
         flowLayout.minimumInteritemSpacing = space
@@ -78,10 +70,3 @@ class SendMemesCollectionViewController: UICollectionViewController {
         flowLayout.itemSize = CGSize(width: dimension, height: dimension)
     }
 }
-
-//extension SendMemesCollectionViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        NSLog("haha")
-//        return CGSize(width: 123, height: 123)
-//    }
-//}

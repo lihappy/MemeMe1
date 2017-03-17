@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = "SendMemeTableViewCell"
+private let reuseIdentifier = "sendMemeTableViewCell"
 let memeDetailViewControllerIdentifier = "memeDetailViewController"
 
 class SendMemesTableViewController: UITableViewController {
